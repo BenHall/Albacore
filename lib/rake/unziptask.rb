@@ -1,15 +1,15 @@
 require 'rake/tasklib'
 
-def zip(name=:zip, *args, &block)
-	Albacore::ZipTask.new(name, *args, &block)
+def unzip(name=:unzip, *args, &block)
+	Albacore::UnZipTask.new(name, *args, &block)
 end
 	
 module Albacore
-	class ZipTask < Albacore::AlbacoreTask
+	class UnZipTask < Albacore::AlbacoreTask
 		def execute(task_args)
-			@zip = ZipDirectory.new
+			@zip = Unzip.new
 			@block.call(@zip, *task_args) unless @block.nil?
-			@zip.package
+			@zip.unzip
 			fail if @zip.failed
 		end		
 	end
