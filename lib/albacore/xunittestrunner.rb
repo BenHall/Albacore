@@ -7,9 +7,9 @@ class XUnitTestRunner
 	attr_accessor :assemblies, :path_to_command, :html_output, :options
 
 	def initialize(path_to_command='')
-		super()
 		@path_to_command = path_to_command
 		@assemblies=[]
+		super()
 	end
 
 	def get_command_line
@@ -25,7 +25,7 @@ class XUnitTestRunner
 	def get_command_parameters
 		command_params = []
 		command_params << build_assembly_list unless @assemblies.empty?
-    command_params << @options.join(" ") unless @options.nil?
+    	command_params << @options.join(" ") unless @options.nil?
 		command_params << build_html_output unless @html_output.nil?
 		command_params
 	end

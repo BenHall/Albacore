@@ -1,22 +1,16 @@
 require 'rake/tasklib'
 
+def xunittask(name=:xunit, *args, &block)
+	Albacore::XUnitTask.new(name, *args, &block)
+end
+	
 module Albacore
-	class XUnitTask < Rake::TaskLib
-		attr_accessor :name
-
-		def initialize(name=:xunit, &block)
-			@name = name
+	class XUnitTask < Albacore::AlbacoreTask
+		def execute(task_args)
 			@xunit = XUnitTestRunner.new
-			@block = block
-			define
-		end
-
-		def define
-			task name do
-		  	@block.call(@xunit) unless @block.nil?
-				@xunit.execute
-				fail if @xunit.failed
-			end
+		  	@block.call(@xunit, *task_args) unless @block.nil?
+			@xunit.execute
+			fail if @xunit.failed
 		end
 	end
 end
